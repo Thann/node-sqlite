@@ -194,7 +194,7 @@ class Database {
     const lastMigration = migrations[migrations.length - 1];
     for (const migration of dbMigrations.slice().sort((a, b) => Math.sign(b.id - a.id))) {
       if (!migrations.some(x => x.id === migration.id) ||
-        (force === 'last' && migration.id === lastMigration.id)) {
+        (force === 'last' && migration.id === lastMigration.id) || force === 'all') {
         await this.run('BEGIN');
         try {
           await this.exec(migration.down);
